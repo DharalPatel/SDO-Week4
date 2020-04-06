@@ -40,6 +40,7 @@ jobs:
           command: |
            mkdir -p test-outputs
            npm run integration-tests
+
       - store_test_results:
           path: test-outputs
   pack:
