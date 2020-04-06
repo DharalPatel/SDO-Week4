@@ -12,25 +12,25 @@ jobs:
     docker:
       - image: circleci/node:lts
     environment:
-      JEST_JUNIT_OUTPUT_DIR: test-outputs
+      JEST_JUNIT_OUTPUT_DIR: test-output
     steps:
       - checkout 
       - install_deps
       - run:
           name: Run unit tests
           command: |
-            mkdir -p test-outputs
+            mkdir -p test-output
             npm run unit-tests
 
       - store_test_results:
-          path: test_outputs
+          path: test_output
           
   integration-tests:
     docker:
       - image: circleci/node:lts
       - image: mongo:4.0
     environment:
-      JEST_JUNIT_OUTPUT_DIR: test-outputs
+      JEST_JUNIT_OUTPUT_DIR: test-output
       APP_PORT: 4000
     steps:
       - checkout
@@ -38,11 +38,11 @@ jobs:
       - run:
           name: Run Integration tests
           command: |
-           mkdir -p test-outputs
+           mkdir -p test-output
            npm run integration-tests
 
       - store_test_results:
-          path: test-outputs
+          path: test-output
   pack:
     docker:
       - image: circleci/node:lts
