@@ -19,8 +19,8 @@ jobs:
       - run:
           name: run tests
           command: |
-            npm run unit-tests
             mkdir -p test-output
+            npm run unit-tests
   pack:
     docker:
       - image: circleci/node:lts
