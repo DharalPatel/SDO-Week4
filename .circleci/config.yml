@@ -24,6 +24,11 @@ jobs:
 
       - store_test_results:
           path: test-output
+
+      - run:
+          name: validate code coverage
+          command: |
+            bash <(curl -s https://codecov.io/bash)
           
   integration-tests:
     docker:
