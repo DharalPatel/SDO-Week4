@@ -53,6 +53,30 @@ jobs:
 
       - store_test_results:
           path: test-output
+
+  sast:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Set up nodejsscan
+          command: |
+            sudo apt update
+            sudo apt install python3-pip
+            pip3 install nodejsscan
+      - run:
+          name: Run nodejsscan
+          command: |
+            nodejsscan -d ./ -o sast-output.json
+
+      - store_artifacts:
+          path: sast-output.json
+
+      - run:
+          name: Parse report
+          command: |
+            exit $(cat sast-output.json | jq .total_count.sec)
   pack:
     docker:
       - image: circleci/node:lts
@@ -71,9 +95,12 @@ workflows:
       - integration-tests:
           requires:
             - ci-build
-      - pack:
+      - sast:
           requires:
             - integration-tests
+      - pack:
+          requires:
+            - sast
           filters:
             branches:
               only:
