@@ -23,7 +23,7 @@ jobs:
             npm run unit-tests
 
       - store_test_results:
-          path: test_output
+          path: test-output
           
   integration-tests:
     docker:
